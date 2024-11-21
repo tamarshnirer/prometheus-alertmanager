@@ -19,7 +19,7 @@ This project implements a monitoring and alerting solution using Prometheus and 
 ### 1. Setting Up the Target:
 - Create an EC2 or any physical or virtual machine with an Ubuntu server with a public IP.
   I used an EC2 of type t2,micro. with 22.04. I generated an elastic ip to have a consistent public ip address.
-- Configure a security group to allow inbound traffic from port 9093 to expose its metrics and port 22 to SSH connection.
+- Configure a security group to allow inbound traffic from port 9100 to expose its metrics and port 22 to SSH connection.
 - Connect to the instance using SSH.
 - Download Node Exporter using the following commands:
 sudo apt update
@@ -59,7 +59,7 @@ sudo systemctl status node_exporter
 sudo apt install -y stress
 
 ### 2. Creating a Slack webhook.
-- In your slack workspace, create a dedicated channel for the Prometheus notification. (e.g. #alerts)
+- In your Slack workspace, create a dedicated channel for the Prometheus notification. (e.g. #alerts)
 - Create a Slack App by going to https://api.slack.com/apps
 - Click "Create New App" and choose "From scratch"
 - Name your app (e.g., "Prometheus Alerts") and select your workspace
@@ -70,8 +70,9 @@ sudo apt install -y stress
 - Authorize the app to post to the selected channel
 - Copy the webhook URL (it should look like https://hooks.slack.com/services/XXXX/XXXX/XXXX)
 ### 3. Setting Up the Monitoring Server
-- Login or SSH to your 2nd Ubuntu machine (I used ubuntu 22.04 over wsl)
-- clone this repository to your ubuntu machine.
+- Log in or SSH to your 2nd Ubuntu machine (I used Ubuntu 22.04 over wsl)
+- Be sure port 9090 is not blocked by 
+- clone this repository to your Ubuntu machine.
 ```bash
 git clone https://github.com/tamarshnirer/prometheus-alertmanager.git
 cd prometheus-alertmanager
@@ -83,7 +84,21 @@ Be sure to keep them secure, it can be done by using a 3rd party vault.
 - Plugin those env var to the YAML files.
 sed -i '' -e "s/TARGET_IP/$TARGET_IP/" prometheus.yml
 sed -i '' -e "s/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/" alertmanager.yml
-
-
+- Download docker and docker-compose
+sudo apt install docker
+sudo apt install docker-compose
+- Run the image
+docker-compose up --build -d
+- You can see the Prometheus and alertmanager UI in the following URLs:
+  http://localhost:9090/
+  http://localhost:9093/
 
 ### 4. Testing the system
+- Stress machine 1 with a stress test
+sudo stress --cpu 1 -v --timeout 300s
+- you can view the alert is firing within 30 seconds.
+- you should get a high cpu  alert to your alets slack channel
+
+<img width="950" alt="Screenshot 2024-11-21 174445" src="https://github.com/user-attachments/assets/459cce2b-528c-4539-96cb-ef0d86b0cdd8">
+
+## Technical Explanation 
