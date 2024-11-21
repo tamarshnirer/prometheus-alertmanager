@@ -35,7 +35,7 @@ sudo getfacl /home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 sudo setfacl -m u:node_exporter:x /home/ubuntu/node_exporter-1.8.2.linux-amd64
 - Set a service to run the Node Exporter.
 vim /etc/systemd/system/node_exporter.service
-
+```bash
 [Unit]
 Description=Node Exporter
 After=network.target
@@ -48,7 +48,7 @@ ExecStart=/home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 
 [Install]
 WantedBy=multi-user.target
-
+```
 - Run the service, make sure its active.                            
 sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
