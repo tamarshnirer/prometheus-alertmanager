@@ -55,10 +55,10 @@ sudo systemctl enable node_exporter
 sudo systemctl start node_exporter
 sudo systemctl status node_exporter
 
-- Download the stress command for testing purpose:
-sudo systemctl start node_exporter
+- Download the stress command for testing purposes:
+sudo apt install -y stress
 
-### 2. Creating a slack webhook.
+### 2. Creating a Slack webhook.
 - In your slack workspace, create a dedicated channel for the Prometheus notification. (e.g. #alerts)
 - Create a Slack App by going to https://api.slack.com/apps
 - Click "Create New App" and choose "From scratch"
@@ -68,11 +68,22 @@ sudo systemctl start node_exporter
 - Click "Add New Webhook to Workspace"
 - Select the #alerts channel (or create it if it doesn't exist)
 - Authorize the app to post to the selected channel
-- Copy the webhook URL (it should look) and keep it secure.
-```bash
-To get started, clone this repository to your local machine:
+- Copy the webhook URL (it should look like https://hooks.slack.com/services/XXXX/XXXX/XXXX)
+### 3. Setting Up the Monitoring Server
+- Login or SSH to your 2nd Ubuntu machine (I used ubuntu 22.04 over wsl)
+- clone this repository to your ubuntu machine.
 ```bash
 git clone https://github.com/tamarshnirer/prometheus-alertmanager.git
 cd prometheus-alertmanager
 ```
-Then, plugin two environment variables: The public IP of the 
+- Create two environment variables: The public IP of the EC2 and the slack webhook.
+export TARGET_IP=<your_target_ip>
+export SLACK_API_WEBHOOK=<your_slack_webhook>
+Be sure to keep them secure, it can be done by using a 3rd party vault.
+- Plugin those env var to the YAML files.
+sed -i '' -e "s/TARGET_IP/$TARGET_IP/" prometheus.yml
+sed -i '' -e "s/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/" alertmanager.yml
+
+
+
+### 4. Testing the system
