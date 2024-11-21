@@ -1,1 +1,0 @@
-# prometheus-home-assigment-aerospike
