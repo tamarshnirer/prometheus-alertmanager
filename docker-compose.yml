@@ -1,0 +1,31 @@
+services:
+  prometheus: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "65534:65534"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus_data:/prometheus
+    environment:
+      - TARGET_IP=${TARGET_IP}
+    command:
+        - "--config.file=/etc/prometheus/prometheus.yml"
+        - "--storage.tsdb.path=/prometheus"
+        - "--web.enable-lifecycle"
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes: 
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - alertmanager_data:/alertmanager
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+
+volumes:
+  prometheus_data: {}
+  alertmanager_data: {}
