@@ -103,7 +103,7 @@ sudo apt install docker-compose
 ```
 - Run the docker-compose image. It should download the base images, build them and run the containers in a bridge network mode.
 ```bash
-docker-compose up --build -d
+docker-compose up -d
 ```
 - You can see the Prometheus and Alertmanager UI in the following URLs accordingly: </br>
   http://localhost:9090/ </br>
