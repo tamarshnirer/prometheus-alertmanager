@@ -95,6 +95,11 @@ Be sure to keep them secure, it can be done by using a 3rd party vault.
 echo "sed -i.bak 's/TARGET_IP/$TARGET_IP/' prometheus.yml"
 echo "sed -i.bak 's/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/' alertmanager.yml"
 ```
+- Create the persistent data volumes for the containers.
+```bash
+mkdir prometheus_data
+mkdir alertmanager_data
+```
 - Download docker and docker-compose
 ```bash
 sudo apt update
