@@ -12,7 +12,7 @@ This project implements a monitoring and alerting solution using Prometheus and 
 ## Setup Instructions
 
 ### Prerequisites
-- 2 Ubuntu servers with 20.04 or higher (One for serving as a target and one for running prometheus and alertmanager. 
+- 2 Ubuntu servers with version 20.04 or higher (One for serving as a target and the other one for running Prometheus and alertmanager. 
 - A Slack Workspace.
 
 ## Steps
@@ -29,7 +29,7 @@ sudo apt update
 wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
 tar xvfz node_exporter-1.8.2.linux-amd64.tar.gz
 ```
-- Create a user to run the service.
+- Create a system user to run the service.
 ```bash
 sudo useradd --system --no-create-home --shell /usr/sbin/nologin node_exporter
 sudo chown -R node_exporter:node_exporter /home/ubuntu/node_exporter-1.8.2.linux-amd64/
