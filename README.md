@@ -101,7 +101,7 @@ sudo apt update
 sudo apt install docker
 sudo apt install docker-compose
 ```
-- Run the docker-compose image
+- Run the docker-compose image. It should download the base images and build the images.
 ```bash
 docker-compose up --build -d
 ```
@@ -110,7 +110,7 @@ docker-compose up --build -d
   http://localhost:9093/
 
 ### 4. Testing the system
-- Stress the target machine with a stress test, plugin the number of vCPUs of the machine.
+- Stress the target machine with a stress test, and plug in the number of vCPUs of the machine.
 ```bash
 sudo stress --cpu 1 -v --timeout 300s
 ```
