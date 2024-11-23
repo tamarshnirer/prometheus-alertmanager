@@ -105,8 +105,8 @@ sudo apt install docker-compose
 ```bash
 docker-compose up --build -d
 ```
-- You can see the Prometheus and Alertmanager UI in the following URLs:
-  http://localhost:9090/
+- You can see the Prometheus and Alertmanager UI in the following URLs: </br>
+  http://localhost:9090/ </br>
   http://localhost:9093/
 
 ### 4. Testing the system
