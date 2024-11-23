@@ -18,23 +18,28 @@ This project implements a monitoring and alerting solution using Prometheus and 
 ## Steps
 ### 1. Setting Up the Target:
 - Create an EC2 or any physical or virtual machine with an Ubuntu server with a public IP.
-  I used an EC2 of type t2,micro. with 22.04. I generated an elastic ip to have a consistent public ip address.
+  I used an EC2 of type t2.micro, with 22.04. I generated an elastic IP to have a consistent public IP address.
 - Configure a security group to allow inbound traffic from port 9100 to expose its metrics and port 22 to SSH connection.
 - Connect to the instance using SSH.
 - Download Node Exporter using the following commands:
+```bash
 sudo apt update
 wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
 tar xvfz node_exporter-1.8.2.linux-amd64.tar.gz
+```
 - Create a user to run the service.
+```bash
 sudo useradd --system --no-create-home --shell /usr/sbin/nologin node_exporter
 sudo chown -R node_exporter:node_exporter /home/ubuntu/node_exporter-1.8.2.linux-amd64/
-sudo chmod +x /home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 sudo apt install acl
 sudo setfacl -m u:node_exporter:x /home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 sudo getfacl /home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 sudo setfacl -m u:node_exporter:x /home/ubuntu/node_exporter-1.8.2.linux-amd64
+```
 - Set a service to run the Node Exporter.
+```bash
 vim /etc/systemd/system/node_exporter.service
+```
 ```bash
 [Unit]
 Description=Node Exporter
@@ -49,17 +54,19 @@ ExecStart=/home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 [Install]
 WantedBy=multi-user.target
 ```
-- Run the service, make sure its active.                            
+- Run the service, and make sure it's active by using the systemctl status command. 
+```bash                           
 sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
 sudo systemctl start node_exporter
 sudo systemctl status node_exporter
-
+```
 - Download the stress command for testing purposes:
+```bash
 sudo apt install -y stress
-
+```
 ### 2. Creating a Slack webhook.
-- In your Slack workspace, create a dedicated channel for the Prometheus notification. (e.g. #alerts)
+- Create a dedicated channel for the Prometheus notification in your Slack workspace. (e.g. #alerts)
 - Create a Slack App by going to https://api.slack.com/apps
 - Click "Create New App" and choose "From scratch"
 - Name your app (e.g., "Prometheus Alerts") and select your workspace
@@ -72,7 +79,7 @@ sudo apt install -y stress
 ### 3. Setting Up the Monitoring Server
 - Log in or SSH to your 2nd Ubuntu machine (I used Ubuntu 22.04 over wsl)
 - Be sure port 9090 is not blocked by 
-- clone this repository to your Ubuntu machine.
+- Clone this repository on your Ubuntu machine.
 ```bash
 git clone https://github.com/tamarshnirer/prometheus-alertmanager.git
 cd prometheus-alertmanager
@@ -82,23 +89,28 @@ export TARGET_IP=<your_target_ip>
 export SLACK_API_WEBHOOK=<your_slack_webhook>
 Be sure to keep them secure, it can be done by using a 3rd party vault.
 - Plugin those env var to the YAML files.
+```bash
 sed -i '' -e "s/TARGET_IP/$TARGET_IP/" prometheus.yml
 sed -i '' -e "s/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/" alertmanager.yml
+```
 - Download docker and docker-compose
+```bash
 sudo apt install docker
 sudo apt install docker-compose
+```
 - Run the image
+```bash
 docker-compose up --build -d
+```
 - You can see the Prometheus and alertmanager UI in the following URLs:
   http://localhost:9090/
   http://localhost:9093/
 
 ### 4. Testing the system
-- Stress machine 1 with a stress test
+- Stress the target machine with a stress test
+```bash
 sudo stress --cpu 1 -v --timeout 300s
-- you can view the alert is firing within 30 seconds.
-- you should get a high cpu  alert to your alets slack channel
-
+- You can view the alert is firing within 30 seconds.
+- You should get a high CPU  alert to your Alets slack channel
+```
 <img width="950" alt="Screenshot 2024-11-21 174445" src="https://github.com/user-attachments/assets/459cce2b-528c-4539-96cb-ef0d86b0cdd8">
-
-## Technical Explanation 
