@@ -17,9 +17,11 @@ This project implements a monitoring and alerting solution using Prometheus and 
 
 ## Steps
 ### 1. Setting Up the Target:
-- Create an EC2 or any physical or virtual machine with an Ubuntu server with a public IP.
-  I used an EC2 of type t2.micro, with 22.04. I generated an elastic IP to have a consistent public IP address.
-- Configure a security group to allow inbound traffic from port 9100 to expose its metrics and port 22 to SSH connection.
+ - Create an EC2 instance (e.g., t2.micro) or any virtual/physical machine running Ubuntu (e.g., 22.04).  
+ - Attach an Elastic IP for a consistent public address.  
+ - Configure a security group to allow:  
+   - **Port 9100** (for metrics collection)  
+   - **Port 22** (for SSH access).  
 - Connect to the instance using SSH.
 - Download Node Exporter using the following commands:
 ```bash
@@ -95,14 +97,15 @@ sed -i '' -e "s/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/" alertmanager.yml
 ```
 - Download docker and docker-compose
 ```bash
+sudo apt update
 sudo apt install docker
 sudo apt install docker-compose
 ```
-- Run the image
+- Run the docker-compose image
 ```bash
 docker-compose up --build -d
 ```
-- You can see the Prometheus and alertmanager UI in the following URLs:
+- You can see the Prometheus and Alertmanager UI in the following URLs:
   http://localhost:9090/
   http://localhost:9093/
 
