@@ -92,8 +92,8 @@ export SLACK_API_WEBHOOK=<your_slack_webhook>
 Be sure to keep them secure, it can be done by using a 3rd party vault.
 - Plugin those env var to the YAML files.
 ```bash
-sed -i '' -e "s/TARGET_IP/$TARGET_IP/" prometheus.yml
-sed -i '' -e "s/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/" alertmanager.yml
+echo "sed -i.bak 's/TARGET_IP/$TARGET_IP/' prometheus.yml"
+echo "sed -i.bak 's/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/' alertmanager.yml"
 ```
 - Download docker and docker-compose
 ```bash
