@@ -110,10 +110,11 @@ docker-compose up --build -d
   http://localhost:9093/
 
 ### 4. Testing the system
-- Stress the target machine with a stress test
+- Stress the target machine with a stress test, plugin the number of vCPUs of the machine.
 ```bash
 sudo stress --cpu 1 -v --timeout 300s
+```
 - You can view the alert is firing within 30 seconds.
 - You should get a high CPU  alert to your Alets slack channel
-```
+
 <img width="950" alt="Screenshot 2024-11-21 174445" src="https://github.com/user-attachments/assets/459cce2b-528c-4539-96cb-ef0d86b0cdd8">
