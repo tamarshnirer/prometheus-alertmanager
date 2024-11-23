@@ -6,8 +6,8 @@ This project implements a monitoring and alerting solution using Prometheus and 
 ## Key Features:
 
 - Monitoring: Prometheus collects metrics from the EC2 instance.
-- Alerting: Alertmanager processes Prometheus alerts and triggers a notification when the threshold is breached.
-- Integration: Slack integration alerts are delivered to the #alerts channel.
+- Alerting: Alertmanager processes Prometheus alerts and triggers a Slack notification when the threshold is breached.
+- Integration: Slack integration is done using a webhook and the alerts are delivered to the #alerts channel.
 
 ## Setup Instructions
 
@@ -80,7 +80,7 @@ sudo apt install -y stress
 - Copy the webhook URL (it should look like https://hooks.slack.com/services/XXXX/XXXX/XXXX)
 ### 3. Setting Up the Monitoring Server
 - Log in or SSH to your 2nd Ubuntu machine (I used Ubuntu 22.04 over wsl)
-- Be sure port 9090 is not blocked by 
+- Be sure ports 9090 and port 9093 are open and not used.
 - Clone this repository on your Ubuntu machine.
 ```bash
 git clone https://github.com/tamarshnirer/prometheus-alertmanager.git
@@ -101,11 +101,11 @@ sudo apt update
 sudo apt install docker
 sudo apt install docker-compose
 ```
-- Run the docker-compose image. It should download the base images, build and run the containers.
+- Run the docker-compose image. It should download the base images, build them and run the containers in a bridge network mode.
 ```bash
 docker-compose up --build -d
 ```
-- You can see the Prometheus and Alertmanager UI in the following URLs: </br>
+- You can see the Prometheus and Alertmanager UI in the following URLs accordingly: </br>
   http://localhost:9090/ </br>
   http://localhost:9093/
 
