@@ -1,5 +1,5 @@
 global:
-  slack_api_url: ${SLACK_API_WEBHOOK}
+  slack_api_url: SLACK_API_WEBHOOK
 route:
   receiver: 'slack-notifications'
 receivers:
