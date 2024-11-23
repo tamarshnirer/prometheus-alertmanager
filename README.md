@@ -92,8 +92,8 @@ export SLACK_API_WEBHOOK=<your_slack_webhook>
 Be sure to keep them secure, it can be done by using a 3rd party vault.
 - Plugin those env var to the YAML files.
 ```bash
-echo "sed -i.bak 's/TARGET_IP/$TARGET_IP/' prometheus.yml"
-echo "sed -i.bak 's/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/' alertmanager.yml"
+sed -i "s/TARGET_IP/$TARGET_IP/g" prometheus.yml
+sed -i "s/SLACK_API_WEBHOOK/$SLACK_API_WEBHOOK/g" alertmanager.yml
 ```
 - Create the persistent data volumes for the containers.
 ```bash
