@@ -101,7 +101,7 @@ sudo apt update
 sudo apt install docker
 sudo apt install docker-compose
 ```
-- Run the docker-compose image. It should download the base images and build the images.
+- Run the docker-compose image. It should download the base images, build and run the containers.
 ```bash
 docker-compose up --build -d
 ```
