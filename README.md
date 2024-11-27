@@ -86,8 +86,8 @@ sudo apt install -y stress
 git clone https://github.com/tamarshnirer/prometheus-alertmanager.git
 cd prometheus-alertmanager
 ```
-- Create two environment variables: The public IP of the EC2 and the slack webhook.
-export TARGET_IP=<your_target_ip>
+- Create two environment variables: The public IP of the EC2 and the slack webhook. </br>
+export TARGET_IP=<your_target_ip> </br>
 export SLACK_API_WEBHOOK=<your_slack_webhook>
 Be sure to keep them secure, it can be done by using a 3rd party vault.
 - Plugin those env var to the YAML files.
