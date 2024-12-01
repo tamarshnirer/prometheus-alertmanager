@@ -35,7 +35,6 @@ sudo useradd --system --no-create-home --shell /usr/sbin/nologin node_exporter
 sudo chown -R node_exporter:node_exporter /home/ubuntu/node_exporter-1.8.2.linux-amd64/
 sudo apt install acl
 sudo setfacl -m u:node_exporter:x /home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
-sudo getfacl /home/ubuntu/node_exporter-1.8.2.linux-amd64/node_exporter
 sudo setfacl -m u:node_exporter:x /home/ubuntu/node_exporter-1.8.2.linux-amd64
 ```
 - Set a service to run the Node Exporter.
