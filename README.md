@@ -86,6 +86,12 @@ sudo apt install -y stress
 git clone https://github.com/tamarshnirer/prometheus-alertmanager.git
 cd prometheus-alertmanager
 ```
+In the directory, you can spot 4 important files:  </br>
+1. prometheus.yml - For configuring the targets and the alerting tool </br>
+2. alert.rules.yml - For defining the rules and their severity levels </br>
+3. alertmanager.yml - For defining the plugins the notifications will be sent to  </br>
+4. docker-compose.yml - For configuring the prometheus and alertmanager containers </br>
+
 - Create two environment variables: The public IP of the EC2 and the slack webhook. </br>
 export TARGET_IP=<your_target_ip> </br>
 export SLACK_API_WEBHOOK=<your_slack_webhook>  </br>
@@ -106,7 +112,7 @@ sudo apt update
 sudo apt install docker
 sudo apt install docker-compose
 ```
-- Run the docker-compose image. It should download the base images, build them and run the containers in a bridge network mode.
+- Run the docker-compose image. It should download the base images, build them, and run the containers in a bridge network mode.
 ```bash
 docker-compose up -d
 ```
@@ -119,7 +125,7 @@ docker-compose up -d
 ```bash
 sudo stress --cpu 1 -v --timeout 300s
 ```
-- You can view the alert is firing within 30 seconds.
+- You can view that the alert is being fired within 30 seconds.
 - You should get a high CPU  alert to your Alets slack channel
 
 <img width="950" alt="Screenshot 2024-11-21 174445" src="https://github.com/user-attachments/assets/459cce2b-528c-4539-96cb-ef0d86b0cdd8">
