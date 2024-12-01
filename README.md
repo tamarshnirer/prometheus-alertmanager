@@ -88,8 +88,8 @@ cd prometheus-alertmanager
 ```
 - Create two environment variables: The public IP of the EC2 and the slack webhook. </br>
 export TARGET_IP=<your_target_ip> </br>
-export SLACK_API_WEBHOOK=<your_slack_webhook>
-Be sure to keep them secure, it can be done by using a 3rd party vault.
+export SLACK_API_WEBHOOK=<your_slack_webhook>  </br>
+Note: Keep them secure! for large-scale production systems, it can be used by 3rd party vaults.
 - Plugin those env var to the YAML files.
 ```bash
 sed -i "s/TARGET_IP/$TARGET_IP/g" prometheus.yml
